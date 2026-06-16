@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日文學習工具集</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f5f3; --surface: #fff; --border: #e0e0e0;
+    --text: #1a1a1a; --text2: #666; --text3: #999;
+    --gold: #b8860b;
+  }
+  body.dark {
+    --bg: #111110; --surface: #1c1c1a; --border: #2e2e2b;
+    --text: #f0ede8; --text2: #a8a69e; --text3: #777;
+    --gold: #d4a94e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; padding: 40px 20px 60px;
+    transition: background .2s, color .2s;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 36px; position: relative; }
+  header h1 { font-family: 'Noto Sans TC', sans-serif; font-weight: 700; font-size: clamp(28px, 6vw, 42px); letter-spacing: 0.02em; }
+  header p { margin-top: 10px; color: var(--text2); font-size: 13px; }
+  .theme-btn {
+    position: absolute; top: 0; right: 0;
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 1px solid var(--border); background: var(--surface);
+    color: var(--text2); cursor: pointer; font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+  .card {
+    display: block; text-decoration: none; color: var(--text);
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 18px 20px; transition: transform .15s, border-color .15s;
+  }
+  .card:hover { transform: translateY(-2px); border-color: var(--gold); }
+  .card-title { font-family: 'Noto Sans TC', sans-serif; font-weight: 600; font-size: 18px; margin-bottom: 6px; }
+  .card-sub { font-size: 12px; color: var(--text2); line-height: 1.5; }
+  footer { text-align: center; margin-top: 40px; font-size: 12px; color: var(--text3); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="切換深色模式">🌙</button>
+    <h1>日文學習工具集</h1>
+    <p>點選下方卡片，前往對應的學習工具</p>
+  </header>
+
+  <div class="grid">
+    <a class="card" href="https://02pokemonplus-ux.github.io/verb-dojo/verb-dojo.html">
+      <div class="card-title">動詞道場</div>
+      <div class="card-sub">五段動詞 18 式變化練習與選擇題測驗</div>
+    </a>
+
+    <a class="card" href="https://02pokemonplus-ux.github.io/japanese-verb-chart/japanese-verb-chart.html">
+      <div class="card-title">五段動詞指南</div>
+      <div class="card-sub">活用形總覽、音便規則、敬語常體例句對照</div>
+    </a>
+
+    <a class="card" href="https://02pokemonplus-ux.github.io/jp-jitaverb-tools/jp-jitaverb-tools.html">
+      <div class="card-title">自他動詞</div>
+      <div class="card-sub">自動詞與他動詞配對與用法整理</div>
+    </a>
+
+    <a class="card" href="https://02pokemonplus-ux.github.io/verb-ishi/verb-ishi.html">
+      <div class="card-title">意志非意志動詞</div>
+      <div class="card-sub">意志動詞與非意志動詞分類練習</div>
+    </a>
+
+    <a class="card" href="https://02pokemonplus-ux.github.io/compound-verb-tool/compound-tool.html">
+      <div class="card-title">複合動詞</div>
+      <div class="card-sub">N2 程度複合動詞記憶卡與測驗</div>
+    </a>
+
+    <a class="card" href="https://02pokemonplus-ux.github.io/Japanese-adjective-table/Japanese-adjective-table.html">
+      <div class="card-title">形容詞變化</div>
+      <div class="card-sub">い形容詞・な形容詞活用整理與練習</div>
+    </a>
+
+    <a class="card" href="https://02pokemonplus-ux.github.io/keigo/keigo.html">
+      <div class="card-title">敬語謙讓語</div>
+      <div class="card-sub">尊敬語、謙讓語、丁寧語對照與用法</div>
+    </a>
+
+    <a class="card" href="https://02pokemonplus-ux.github.io/jp-jujutsu/jp-jujutsu.html">
+      <div class="card-title">助數詞</div>
+      <div class="card-sub">日文數量詞分類與使用場合</div>
+    </a>
+
+    <a class="card" href="https://02pokemonplus-ux.github.io/Japanese-country-flashcard/Japanese-country.html">
+      <div class="card-title">國家名稱</div>
+      <div class="card-sub">片假名國名與漢字略稱閃卡測驗</div>
+    </a>
+  </div>
+
+  <footer>持續更新中</footer>
+</div>
+
+<script>
+function toggleTheme() {
+  const dark = document.body.classList.toggle('dark');
+  document.getElementById('theme-btn').textContent = dark ? '☀️' : '🌙';
+  localStorage.setItem('hub-dark', dark ? '1' : '0');
+}
+if (localStorage.getItem('hub-dark') === '1') {
+  document.body.classList.add('dark');
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('theme-btn').textContent = '☀️';
+  });
+}
+</script>
+</body>
+</html>
