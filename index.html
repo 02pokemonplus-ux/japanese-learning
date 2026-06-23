@@ -27,15 +27,8 @@
   header { text-align: center; margin-bottom: 36px; position: relative; }
   header h1 { font-family: 'Noto Sans TC', sans-serif; font-weight: 700; font-size: clamp(28px, 6vw, 42px); letter-spacing: 0.02em; }
   header p { margin-top: 10px; color: var(--text2); font-size: 13px; }
-  .theme-btn {
-    position: absolute; top: 0; right: 0;
-    width: 34px; height: 34px; border-radius: 50%;
-    border: 1px solid var(--border); background: var(--surface);
-    color: var(--text2); cursor: pointer; font-size: 15px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
   .card {
     display: block; text-decoration: none; color: var(--text);
     background: var(--surface); border: 1px solid var(--border);
@@ -45,32 +38,64 @@
   .card-title { font-family: 'Noto Sans TC', sans-serif; font-weight: 600; font-size: 18px; margin-bottom: 6px; }
   .card-sub { font-size: 12px; color: var(--text2); line-height: 1.5; }
   footer { text-align: center; margin-top: 40px; font-size: 12px; color: var(--text3); }
+  .toolbar { position: absolute; top: 0; right: 0; display: flex; gap: 8px; align-items: center; }
+  .tool-btn {
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 1px solid var(--border); background: var(--surface);
+    color: var(--text2); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color .15s, color .15s;
+  }
+  .tool-btn:hover { border-color: var(--gold); color: var(--text); }
+  .tool-btn svg { display: block; }
+  /* List mode */
+  .grid.list-mode { grid-template-columns: 1fr; gap: 6px; }
+  .grid.list-mode .card { display: flex; align-items: center; gap: 14px; padding: 12px 18px; }
+  .grid.list-mode .card-title { font-size: 15px; margin-bottom: 0; flex-shrink: 0; min-width: 110px; }
+  .grid.list-mode .card-sub { font-size: 12px; color: var(--text2); }
 </style>
 </head>
 <body>
 <div class="container">
   <header>
-    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="切換深色模式">
-      <svg id="icon-moon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-      </svg>
-      <svg id="icon-sun" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:none">
-        <circle cx="12" cy="12" r="4"/>
-        <line x1="12" y1="2" x2="12" y2="5"/>
-        <line x1="12" y1="19" x2="12" y2="22"/>
-        <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/>
-        <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
-        <line x1="2" y1="12" x2="5" y2="12"/>
-        <line x1="19" y1="12" x2="22" y2="12"/>
-        <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/>
-        <line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
-      </svg>
-    </button>
+    <div class="toolbar">
+      <!-- 方格/條列切換 -->
+      <button class="tool-btn" id="layout-btn" onclick="toggleLayout()" title="切換顯示模式">
+        <svg id="icon-list" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        <svg id="icon-grid" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"/>
+          <rect x="14" y="3" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/>
+        </svg>
+      </button>
+      <!-- 晝夜切換 -->
+      <button class="tool-btn" id="theme-btn" onclick="toggleTheme()" title="切換深色模式">
+        <svg id="icon-moon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg id="icon-sun" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+          <circle cx="12" cy="12" r="4"/>
+          <line x1="12" y1="2" x2="12" y2="5"/>
+          <line x1="12" y1="19" x2="12" y2="22"/>
+          <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/>
+          <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
+          <line x1="2" y1="12" x2="5" y2="12"/>
+          <line x1="19" y1="12" x2="22" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/>
+          <line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+    </div>
     <h1>日文學習工具集</h1>
     <p>點選下方卡片，前往對應的學習工具</p>
   </header>
 
-  <div class="grid">
+  <div class="grid" id="main-grid">
     <a class="card" href="https://02pokemonplus-ux.github.io/verb-dojo/verb-dojo.html">
       <div class="card-title">動詞道場</div>
       <div class="card-sub">五段動詞 18 式變化練習與選擇題測驗</div>
@@ -130,6 +155,26 @@
       <div class="card-title">慣用句</div>
       <div class="card-sub">日文慣用句意義與例句對照</div>
     </a>
+
+    <a class="card" href="https://02pokemonplus-ux.github.io/joshi/joshi.html">
+      <div class="card-title">助詞</div>
+      <div class="card-sub">日文助詞用法與例句整理</div>
+    </a>
+
+    <a class="card" href="https://02pokemonplus-ux.github.io/shou/shou.html">
+      <div class="card-title">稱謂</div>
+      <div class="card-sub">日文人際關係稱謂與用法對照</div>
+    </a>
+
+    <a class="card" href="https://02pokemonplus-ux.github.io/JP-map/jp-map">
+      <div class="card-title">日本地圖</div>
+      <div class="card-sub">都道府縣地理位置與相關知識</div>
+    </a>
+
+    <a class="card" href="https://02pokemonplus-ux.github.io/JP-history/history">
+      <div class="card-title">日本歷史人物</div>
+      <div class="card-sub">重要歷史人物事蹟與年代整理</div>
+    </a>
   </div>
 
   <footer>持續更新中</footer>
@@ -142,11 +187,26 @@ function toggleTheme() {
   document.getElementById('icon-sun').style.display = dark ? '' : 'none';
   localStorage.setItem('hub-dark', dark ? '1' : '0');
 }
+function toggleLayout() {
+  const grid = document.getElementById('main-grid');
+  const isList = grid.classList.toggle('list-mode');
+  document.getElementById('icon-list').style.display = isList ? '' : 'none';
+  document.getElementById('icon-grid').style.display = isList ? 'none' : '';
+  localStorage.setItem('hub-layout', isList ? 'list' : 'grid');
+}
+// Init
 if (localStorage.getItem('hub-dark') === '1') {
   document.body.classList.add('dark');
   document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('icon-moon').style.display = 'none';
     document.getElementById('icon-sun').style.display = '';
+  });
+}
+if (localStorage.getItem('hub-layout') === 'list') {
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('main-grid').classList.add('list-mode');
+    document.getElementById('icon-list').style.display = '';
+    document.getElementById('icon-grid').style.display = 'none';
   });
 }
 </script>
